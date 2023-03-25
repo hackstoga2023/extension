@@ -18,7 +18,8 @@ function scrollWindow(position: number) {
     window.scroll(0, position);
 }
 
-function readEmail(position: number) {
+function readEmail() {
+    console.log("reading email")
     const selector = ".adn.ads";
     let email = document.querySelector(".adn.ads");
     console.log(email);
@@ -51,82 +52,10 @@ function readEmail(position: number) {
             emailString += " ";
         }
     })
-
-    console.log(emailString);
-    // if (email) {
-    //     var tempDivElement = document.createElement("div");
-    //     tempDivElement.innerHTML = email.outerHTML;
-
-    //     // Retrieve the text property of the element
-        
-    
-    //     let emailString = tempDivElement.textContent || tempDivElement.innerText || "";
-    //     console.log(emailString);
-    // } else {
-    //     console.log("element was null.")
-    // }
+    console.log(emailString)
+    return emailString;
 }
 
-/**
- * Executes a string of Javascript on the current tab
- * @param code The string of code to execute on the current tab
- */
-function executeScript(position: number): void {
-    // Query for the active tab in the current window
-    browser.tabs
-        .query({ active: true, currentWindow: true })
-        .then((tabs: Tabs.Tab[]) => {
-            // Pulls current tab from browser.tabs.query response
-            const currentTab: Tabs.Tab | number = tabs[0];
-
-            // Short circuits function execution is current tab isn't found
-            if (!currentTab) {
-                return;
-            }
-            const currentTabId: number = currentTab.id as number;
-
-            // Executes the script in the current tab
-            browser.scripting
-                .executeScript({
-                    target: {
-                        tabId: currentTabId,
-                    },
-                    func: scrollWindow,
-                    args: [position],
-                })
-                .then(() => {
-                    console.log("Done Scrolling");
-                });
-        });
-}
-
-function executeReadEmail(): void {
-    // Query for the active tab in the current window
-    browser.tabs
-        .query({ active: true, currentWindow: true })
-        .then((tabs: Tabs.Tab[]) => {
-            // Pulls current tab from browser.tabs.query response
-            const currentTab: Tabs.Tab | number = tabs[0];
-
-            // Short circuits function execution is current tab isn't found
-            if (!currentTab) {
-                return;
-            }
-            const currentTabId: number = currentTab.id as number;
-
-            // Executes the script in the current tab
-            browser.scripting
-                .executeScript({
-                    target: {
-                        tabId: currentTabId,
-                    },
-                    func: readEmail,
-                })
-                .then(() => {
-                    console.log("Read Mail Contents.");
-                });
-        });
-}
 
 // // // //
 
@@ -134,32 +63,22 @@ export function Popup() {
     // Sends the `popupMounted` event
 
     const [msg, setmsg] = useState<string>("TestMsg");
-    const getEngines = async () => {
-        const response = await browser.runtime.sendMessage({
-            mode: "email",
-            input: "none"
-        });
-        setmsg(JSON.stringify(response));
+
+    const doReadEmail = () => {
+        const data = readEmail();
+        console.log("trying to read email");
+        setmsg(data)
     }
-    // Renders the component tree
     return (
         <div className={css.popupContainer}>
             <div className="mx-4 my-4">
-                <Hello />
                 <hr />
-                <Scroller
-                    onClickScrollTop={() => {
-                        executeScript(scrollToTopPosition);
-                    }}
-                    onClickScrollBottom={() => {
-                        executeScript(scrollToBottomPosition);
-                    }}
-                />
-                <hr />
-                <WebmailHelper 
+                <WebmailHelper
                     onClickReadEmail={() => {
-                        executeReadEmail();
-                    }}/>
+                        doReadEmail()
+                    }} />
+                <hr />
+                {msg}
             </div>
         </div>
     );

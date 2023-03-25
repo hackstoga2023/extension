@@ -5,7 +5,7 @@ import css from "./styles.module.css";
 
 export function WebmailHelper(props: {
     onClickReadEmail: () => void;
-    }) {
+}) {
     return (
         <div className="row">
             <div className="col-lg-12 text-center">
@@ -14,7 +14,7 @@ export function WebmailHelper(props: {
                     data-testid="scroll-to-top"
                     onClick={() => props.onClickReadEmail()}
                 >
-                    Scroll To Top
+                    Get Gmail Data
                 </button>
             </div>
         </div>
