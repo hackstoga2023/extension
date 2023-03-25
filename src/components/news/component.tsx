@@ -68,12 +68,19 @@ async function readCNNArticle() {
 
 function cleanBBCData(data: string) {
     var tempData = data.substring(0, data.lastIndexOf("Related Topics"));
+    console.log(tempData)
     return tempData;
 
 }
 
 function cleanCNNData(data: string) {
-    var tempData = data.substring(0, data.lastIndexOf("Enter your email")) + data.substring(data.lastIndexOf("}"));
+    var tempData = ""
+    if (data.indexOf("Enter your email") != -1)
+        tempData = data.substring(0, data.lastIndexOf("Enter your email")) + data.substring(data.lastIndexOf("}"));
+    else {
+        tempData = data.substring(0, data.indexOf("{")) + data.substring(data.lastIndexOf("}"))
+    }
+    console.log(tempData);
     return tempData;
 }
 
