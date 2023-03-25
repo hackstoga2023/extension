@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Hello } from "@src/components/hello";
 import browser, { Tabs } from "webextension-polyfill";
 import { Scroller } from "@src/components/scroller";
+import { NewsWebsites } from "@src/components/news";
 import css from "./styles.module.css";
-import { KeyField } from "@src/components/keyfield";
 import { WebmailHelper } from "@src/components/webmail";
 
 
@@ -63,56 +63,6 @@ async function readEmail() {
     return data[0].result;
 }
 
-async function readBBCArticle() {
-
-    const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-    const currentTab = tabs[0];
-    const currentTabId = currentTab.id as number;
-
-    const data = await browser.scripting.executeScript({
-        target: {
-            tabId: currentTabId
-        },
-        func: () => {
-            let email = document.querySelector("#main-content > article");
-
-            console.log(email);
-
-            let lines = email?.childNodes;
-            // let lines = email?.querySelectorAll("div");
-
-
-            let emailString = "";
-
-            // emailString += document.querySelector("#\\:24 > div.adn.ads > div.gs > div.gE.iv.gt > table > tbody > tr:nth-child(1) > td.gF.gK > table > tbody > tr > td > h3 > span > span > span")?.textContent;
-            lines?.forEach((element) => {
-                if (element.textContent) {
-                    let bodyText = (element as HTMLElement).querySelector("#\\:26 > div:nth-child(1)");
-                    if (bodyText) {
-                        bodyText?.childNodes.forEach((bodyElement) => {
-                            if (bodyElement) {
-
-                                emailString += bodyElement.textContent + " ";
-
-                            } else {
-                                emailString += element.textContent;
-                            }
-                        })
-                    } else {
-                        emailString += element.textContent + " ";
-                    }
-                } else {
-                    console.log("no content");
-                    emailString += " ";
-                }
-            })
-
-            console.log(emailString);
-            return emailString
-        }
-    })
-    return data[0].result;
-}
 var currentUrl = "";
 
 const newsWebsites = ['www.bbc.com', 'www.cnn.com']
@@ -120,13 +70,18 @@ const emailsWebsites = ['www.gmail.com', 'www.outlook.com', 'www.yahoomail.com',
 export function Popup() {
     // Sends the `popupMounted` event
 
+    // write a use effect to get the current browser url
+    useEffect(() => {
+        browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            var url = new URL(tabs[0].url as string);
+            currentUrl = url.hostname;
+            seturl(currentUrl)
+        })
+    }, [])
+    const [url, seturl] = useState<string>("");
     const [email, setemail] = useState<string>("");
     const [msg, setmsg] = useState<string>("TestMsg");
-    const [bbcdata, setbbcdata] = useState<string>("");
-    const getbbc = async () => {
-        const data = await readBBCArticle();
-        setbbcdata(data);
-    }
+
     const doReadEmail = async () => {
         const data = await readEmail();
         setemail(data);
@@ -140,19 +95,28 @@ export function Popup() {
     }
     return (
         <div className={css.popupContainer}>
-            <div className="mx-4 my-4">
+            <div className="bg-[#1b1b1b] flex flex-col items-center w-full text-white">
 
-                <p>BBC: {bbcdata}</p>
-                <button onClick={getbbc}>Get BBC</button>
+                <h1 className="font-bold text-white text-xl mt-6">Chrome Buddy</h1>
+                <div className="wrapper text-sm mt-4 text-gray-500">
+                    {
+                        url === "" ? <p>Navigate to one of our supported websites for features like news summaries and email suggestions</p> : <p>Current URL: {url}</p>
+                    }
+                </div>
+                {
+                    newsWebsites.includes(url) ? <NewsWebsites url={url} /> : <></>
+                }
+                <div className="email mt-6">
+                    {
+                        url === "mail.google.com" ? <>
+                            <WebmailHelper
+                                onClickReadEmail={() => {
+                                    doReadEmail()
+                                }} />
+                        </> : <></>
+                    }
+                </div>
 
-                <hr />
-                <p>Email: {email}</p>
-                <WebmailHelper
-                    onClickReadEmail={() => {
-                        doReadEmail()
-                    }} />
-                <hr />
-                {msg}
             </div>
         </div>
     );
