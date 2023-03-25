@@ -102,7 +102,7 @@ export function NewsWebsites(props: {
     const getbbc = async () => {
         const data = await readBBCArticle();
         const summary = await browser.runtime.sendMessage({
-            mode: "summarize",
+            mode: "news",
             input: cleanBBCData(data)
         });
         console.log(summary)
@@ -112,7 +112,7 @@ export function NewsWebsites(props: {
     const getcnn = async () =>{
         const data = await readCNNArticle();
         const summary = await browser.runtime.sendMessage({
-            mode: "summarize",
+            mode: "news",
             input: cleanCNNData(data)
         });
         setSummary(summary);
