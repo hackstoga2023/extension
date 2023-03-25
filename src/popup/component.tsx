@@ -29,11 +29,9 @@ async function readEmail() {
             tabId: currentTabId
         },
         func: () => {
-            let email = document.querySelector("#\\:2vq > div.adn.ads");
+            let email = document.querySelector(".adn.ads");
             let lines = email?.childNodes;
             // let lines = email?.querySelectorAll("div");
-
-            console.log(email)
             let emailString = "";
 
             emailString += document.querySelector("#\\:24 > div.adn.ads > div.gs > div.gE.iv.gt > table > tbody > tr:nth-child(1) > td.gF.gK > table > tbody > tr > td > h3 > span > span > span")?.textContent;
@@ -71,10 +69,12 @@ async function readEmail() {
 export function Popup() {
     // Sends the `popupMounted` event
 
+    const [email, setemail] = useState<string>("");
     const [msg, setmsg] = useState<string>("TestMsg");
 
     const doReadEmail = async () => {
         const data = await readEmail();
+        setemail(data);
         const airesp = await browser.runtime.sendMessage({
             mode: "email",
             input: data
@@ -87,6 +87,7 @@ export function Popup() {
         <div className={css.popupContainer}>
             <div className="mx-4 my-4">
                 <hr />
+                <p>Email: {email}</p>
                 <WebmailHelper
                     onClickReadEmail={() => {
                         doReadEmail()
