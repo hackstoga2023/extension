@@ -123,7 +123,7 @@ export function WebmailHelper() {
                 </button>
             </div>
             <button onClick={confirmReply}>Test</button>
-            <div className="output mt-2 px-2 text-md text-white">
+            <div className="output mt-2 px-10 text-md text-white">
                 {msg}
             </div>
         </div>
