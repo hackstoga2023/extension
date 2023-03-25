@@ -65,6 +65,29 @@ export function WebmailHelper() {
         const msg = airesp.choices[0].message.content
         setmsg(msg);
     }
+
+
+    async function confirmReply() {
+        const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+    const currentTab = tabs[0];
+    const currentTabId = currentTab.id as number;
+
+    const data = await browser.scripting.executeScript({
+        target: {
+            tabId: currentTabId
+        },
+        func: (msg) => {
+            (document.querySelector("#\\:21") as HTMLButtonElement).click();
+            
+            setTimeout(() => {(document.querySelector(".editable") as HTMLDivElement).innerHTML = msg;}, 1000);
+        },
+        args: [msg]
+    })  
+}
+
+
+
+
     return (
         <div className="row">
             <div className="grid gap-3 grid-cols-2 mt-3 w-full">
@@ -99,7 +122,7 @@ export function WebmailHelper() {
                     Funny
                 </button>
             </div>
-
+            <button onClick={confirmReply}>Test</button>
             <div className="output mt-2 px-2 text-md text-white">
                 {msg}
             </div>
