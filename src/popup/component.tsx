@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Hello } from "@src/components/hello";
 import browser, { Tabs } from "webextension-polyfill";
 import { Scroller } from "@src/components/scroller";
@@ -51,16 +51,22 @@ function executeScript(position: number): void {
 
 export function Popup() {
     // Sends the `popupMounted` event
-    React.useEffect(() => {
-        browser.runtime.sendMessage({ popupMounted: true });
-    }, []);
 
+    const [msg, setmsg] = useState<string>("TestMsg");
+    const getEngines = async () => {
+        const response = await browser.runtime.sendMessage({
+            mode: "email",
+            input: "none"
+        });
+        setmsg(JSON.stringify(response));
+    }
     // Renders the component tree
     return (
         <div className={css.popupContainer}>
             <div className="mx-4 my-4">
                 <Hello />
                 <hr />
+                {msg}
                 <Scroller
                     onClickScrollTop={() => {
                         executeScript(scrollToTopPosition);
@@ -69,6 +75,9 @@ export function Popup() {
                         executeScript(scrollToBottomPosition);
                     }}
                 />
+
+                <button onClick={getEngines}>List engines</button>
+
             </div>
         </div>
     );
