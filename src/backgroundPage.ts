@@ -8,6 +8,7 @@ interface Message {
 browser.runtime.onMessage.addListener(
     async (message: Message, sender) => {
 
+        const apikey = "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"
         switch (message.mode) {
             case "email":
                 console.log("Making req")
@@ -30,23 +31,16 @@ browser.runtime.onMessage.addListener(
             case "news":
 
                 break;
+            case "checkkey":
+                const modelResponse = await fetch("https://api.openai.com/v1/models", {
+                    headers: {
+                        "Authorization": `Bearer ${apikey}`
+                    }
+                })
+                const jsonModelResponse = await modelResponse.json();
+                console.log(jsonModelResponse)
+                return Promise.resolve("")
+                break;
         }
     }
 );
-
-// browser.runtime.onMessage.addListener(
-//     (message: Message, sender: browser.runtime.MessageSender, sendResponse: (response?: any) => void) => {
-//         // Log statement if request.popupMounted is true
-//         // NOTE: this request is sent in `popup/component.tsx`
-//         if (request.popupMounted) {
-//             fetch("https://api.openai.com/v1/models", {
-//                 headers: {
-//                     "Authorization": "Bearer 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",
-//                     "OpenAI-Organization": "org-nPujVuZtkzTfCsljKAsPXe8a",
-//                     "Content-Type": "application/json"
-//                 }
-//             }).then(response => response.json()).then(data => console.log(data));
-//             console.log("backgroundPage notified that Popup.tsx has mounted. !");
-//             sendResponse("");
-//         }
-//     });

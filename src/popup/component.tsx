@@ -63,21 +63,7 @@ export function Popup() {
     // Renders the component tree
     return (
         <div className={css.popupContainer}>
-            <div className="mx-4 my-4">
-                <Hello />
-                <hr />
-                {msg}
-                <Scroller
-                    onClickScrollTop={() => {
-                        executeScript(scrollToTopPosition);
-                    }}
-                    onClickScrollBottom={() => {
-                        executeScript(scrollToBottomPosition);
-                    }}
-                />
-
-                <button onClick={getEngines}>List engines</button>
-
+            <div className="mx-4 my-4 bg-purple-900">
             </div>
         </div>
     );
