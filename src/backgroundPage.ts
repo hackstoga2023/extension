@@ -3,6 +3,7 @@ import browser from "webextension-polyfill";
 interface Message {
     mode: string,
     input: string,
+    formality: string,
 }
 
 browser.runtime.onMessage.addListener(
@@ -20,7 +21,7 @@ browser.runtime.onMessage.addListener(
                     method: "POST",
                     body: JSON.stringify({
                         "model": "gpt-3.5-turbo",
-                        "messages": [{ "role": "user", "content": `The below is a an email I have recieved please come up with a contextual response to it. ${message.input}` }]
+                        "messages": [{ "role": "user", "content": `The below is a an email I have recieved please come up with a ${message.formality}, contextual response to it. ${message.input}` }]
                     })
                 })
 
