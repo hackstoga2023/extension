@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import css from "./styles.module.css";
 import browser, { Tabs } from "webextension-polyfill";
 
-// // // //
+//executes browser scrapes
 async function readBBCArticle() {
 
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
@@ -83,6 +83,7 @@ function cleanCNNData(data: string) {
     return tempData;
 }
 
+// news website component
 export function NewsWebsites(props: {
     url: string
 }) {

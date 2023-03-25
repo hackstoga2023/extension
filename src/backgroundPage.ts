@@ -5,7 +5,7 @@ interface Message {
     input: string,
     formality: string,
 }
-
+// make api calls
 browser.runtime.onMessage.addListener(
     async (message: Message, sender) => {
         let resp;
