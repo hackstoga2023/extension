@@ -24,11 +24,26 @@ function readEmail(position: number) {
     console.log(email);
 
     let lines = email?.childNodes;
+    // let lines = email?.querySelectorAll("div");
+
 
     let emailString = "";
     lines?.forEach((element) => {
         if (element.textContent) {
-            emailString += element.textContent;
+            let bodyText = (element as HTMLElement).querySelector("#\\:26 > div:nth-child(1)");
+            if (bodyText) {
+                bodyText?.childNodes.forEach((bodyElement) => {
+                    if (bodyElement) {
+
+                        emailString += bodyElement.textContent + " ";
+
+                    } else {
+                        emailString += element.textContent;
+                    }
+                })
+            } else {
+                emailString += element.textContent + " ";
+            }
         } else {
             console.log("no content");
             emailString += " ";
