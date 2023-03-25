@@ -8,6 +8,7 @@ it("component renders", () => {
             <Scroller
                 onClickScrollTop={jest.fn()}
                 onClickScrollBottom={jest.fn()}
+                
             />,
         )
         .toJSON();

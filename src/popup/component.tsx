@@ -9,6 +9,7 @@ import css from "./styles.module.css";
 // Scripts to execute in current tab
 const scrollToTopPosition = 0;
 const scrollToBottomPosition = 9999999;
+var currentUrl = "";
 
 function scrollWindow(position: number) {
     window.scroll(0, position);
@@ -30,6 +31,8 @@ function executeScript(position: number): void {
             if (!currentTab) {
                 return;
             }
+            currentUrl = currentTab.url as string;
+            
             const currentTabId: number = currentTab.id as number;
 
             // Executes the script in the current tab
@@ -42,6 +45,7 @@ function executeScript(position: number): void {
                     args: [position],
                 })
                 .then(() => {
+                    
                     console.log("Done Scrolling");
                 });
         });
@@ -58,7 +62,7 @@ export function Popup() {
     // Renders the component tree
     return (
         <div className={css.popupContainer}>
-            <div className="mx-4 my-4">
+            <div className="mx-4 my-4 justify-center">
                 <Hello />
                 <hr />
                 <Scroller
@@ -68,6 +72,7 @@ export function Popup() {
                     onClickScrollBottom={() => {
                         executeScript(scrollToBottomPosition);
                     }}
+                    
                 />
             </div>
         </div>
