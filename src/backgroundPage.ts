@@ -7,7 +7,7 @@ interface Message {
 
 browser.runtime.onMessage.addListener(
     async (message: Message, sender) => {
-
+        let resp;
         const apikey = "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"
         switch (message.mode) {
             case "email":
@@ -25,10 +25,24 @@ browser.runtime.onMessage.addListener(
                 })
 
                 const jsonResponse = await response.json();
-                return Promise.resolve(jsonResponse)
+                resp = Promise.resolve(jsonResponse)
                 break;
             case "news":
+                const newsresponse = await fetch("https://api.openai.com/v1/chat/completions", {
+                    headers: {
+                        "Authorization": "Bearer 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",
+                        "OpenAI-Organization": "org-nPujVuZtkzTfCsljKAsPXe8a",
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({
+                        "model": "gpt-3.5-turbo",
+                        "messages": [{ "role": "user", "content": `Please summarize the following news article as unbiased as you can, ${message.input}` }]
+                    })
+                })
 
+                const newsjsonResponse = await newsresponse.json();
+                resp = Promise.resolve(newsjsonResponse)
                 break;
             case "checkkey":
                 const modelResponse = await fetch("https://api.openai.com/v1/models", {
@@ -41,5 +55,6 @@ browser.runtime.onMessage.addListener(
                 return Promise.resolve("")
                 break;
         }
+        return resp;
     }
 );
