@@ -24,7 +24,6 @@ async function readBBCArticle() {
                         bodyText?.childNodes.forEach((bodyElement) => {
                             if (bodyElement) {
                                 if (!bodyElement.textContent?.toString().includes("<img")) {
-
                                     emailString += bodyElement.textContent + " ";
                                 }
                             } else {
@@ -67,7 +66,8 @@ async function readCNNArticle() {
 }
 
 function cleanBBCData(data: string) {
-    var tempData = data.substring(0, data.lastIndexOf("Related Topics"));
+
+    var tempData = data.split("/*!")[0];
     console.log(tempData)
     return tempData;
 
@@ -80,7 +80,6 @@ function cleanCNNData(data: string) {
     else {
         tempData = data.substring(0, data.indexOf("{")) + data.substring(data.lastIndexOf("}"))
     }
-    console.log(tempData);
     return tempData;
 }
 
@@ -96,7 +95,7 @@ export function NewsWebsites(props: {
             input: cleanBBCData(data)
         });
         console.log(summary)
-        setSummary(summary)
+        setSummary(summary.choices[0].message.content)
     }
 
     const getcnn = async () => {
