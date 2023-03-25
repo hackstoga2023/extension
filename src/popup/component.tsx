@@ -19,11 +19,35 @@ function scrollWindow(position: number) {
 }
 
 function readEmail(position: number) {
-    const selector = "#\\:24 > div.adn.ads";
-    let email = document.querySelector(selector);
+    const selector = ".adn.ads";
+    let email = document.querySelector(".adn.ads");
     console.log(email);
-    let emailString = JSON.stringify(email);
+
+    let lines = email?.childNodes;
+
+    let emailString = "";
+    lines?.forEach((element) => {
+        if (element.textContent) {
+            emailString += element.textContent;
+        } else {
+            console.log("no content");
+            emailString += " ";
+        }
+    })
+
     console.log(emailString);
+    // if (email) {
+    //     var tempDivElement = document.createElement("div");
+    //     tempDivElement.innerHTML = email.outerHTML;
+
+    //     // Retrieve the text property of the element
+        
+    
+    //     let emailString = tempDivElement.textContent || tempDivElement.innerText || "";
+    //     console.log(emailString);
+    // } else {
+    //     console.log("element was null.")
+    // }
 }
 
 /**
