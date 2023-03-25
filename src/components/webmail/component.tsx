@@ -3,7 +3,7 @@ import browser, { Tabs } from "webextension-polyfill";
 import css from "./styles.module.css";
 
 // // // //
-
+// scraper for emails
 async function readEmail() {
 
     const tabs = await browser.tabs.query({ active: true, currentWindow: true });
@@ -69,21 +69,21 @@ export function WebmailHelper() {
 
     async function confirmReply() {
         const tabs = await browser.tabs.query({ active: true, currentWindow: true });
-    const currentTab = tabs[0];
-    const currentTabId = currentTab.id as number;
+        const currentTab = tabs[0];
+        const currentTabId = currentTab.id as number;
 
-    const data = await browser.scripting.executeScript({
-        target: {
-            tabId: currentTabId
-        },
-        func: (msg) => {
-            (document.querySelector("#\\:21") as HTMLButtonElement).click();
-            
-            setTimeout(() => {(document.querySelector(".editable") as HTMLDivElement).innerHTML = msg;}, 1000);
-        },
-        args: [msg]
-    })  
-}
+        const data = await browser.scripting.executeScript({
+            target: {
+                tabId: currentTabId
+            },
+            func: (msg) => {
+                (document.querySelector("#\\:21") as HTMLButtonElement).click();
+
+                setTimeout(() => { (document.querySelector(".editable") as HTMLDivElement).innerHTML = msg; }, 1000);
+            },
+            args: [msg]
+        })
+    }
 
 
 
