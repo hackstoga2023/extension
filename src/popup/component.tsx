@@ -28,6 +28,8 @@ function readEmail(position: number) {
 
 
     let emailString = "";
+
+    emailString += document.querySelector("#\\:24 > div.adn.ads > div.gs > div.gE.iv.gt > table > tbody > tr:nth-child(1) > td.gF.gK > table > tbody > tr > td > h3 > span > span > span")?.textContent;
     lines?.forEach((element) => {
         if (element.textContent) {
             let bodyText = (element as HTMLElement).querySelector("#\\:26 > div:nth-child(1)");
