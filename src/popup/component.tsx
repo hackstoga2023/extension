@@ -79,7 +79,9 @@ export function Popup() {
             mode: "email",
             input: data
         })
-        setmsg(airesp);
+        const msg = airesp.choices[0].message.content
+        console.log(msg)
+        setmsg(msg);
     }
     return (
         <div className={css.popupContainer}>
