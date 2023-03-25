@@ -51,6 +51,7 @@ async function readEmail() {
                     } else {
                         emailString += element.textContent + " ";
                     }
+                    // element.textContent = "painting";
                 } else {
                     console.log("no content");
                     emailString += " ";
@@ -70,14 +71,20 @@ export function Popup() {
     // Sends the `popupMounted` event
 
     const [email, setemail] = useState<string>("");
-    const [msg, setmsg] = useState<string>("TestMsg");
+    const [msg, setmsg] = useState<string>("Choose a desired formality above.");
+    let desiredFormality = "formal";
 
     const doReadEmail = async () => {
+        setmsg("Reading Email...");
         const data = await readEmail();
+        setmsg("Generating Email...");
         setemail(data);
+
+
         const airesp = await browser.runtime.sendMessage({
             mode: "email",
-            input: data
+            input: data,
+            formality: desiredFormality
         })
         const msg = airesp.choices[0].message.content
         console.log(msg)
@@ -86,13 +93,17 @@ export function Popup() {
     return (
         <div className={css.popupContainer}>
             <div className="mx-4 my-4">
-                <hr />
-                <p>Email: {email}</p>
+                {/* <p>Email: {email}</p> */}
                 <WebmailHelper
                     onClickReadEmail={() => {
                         doReadEmail()
+                    }}
+                    setFormality={(desired) => {
+                        console.log(desired + " email:")
+                        desiredFormality = desired;
+                        doReadEmail()
                     }} />
-                <hr />
+                <br></br>
                 {msg}
             </div>
         </div>
