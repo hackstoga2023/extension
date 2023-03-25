@@ -49,10 +49,7 @@ async function readEmail() {
     })
     return data[0].result;
 }
-export function WebmailHelper(props: {
-    onClickReadEmail: () => void;
-    setFormality: (desired: string) => void;
-}) {
+export function WebmailHelper() {
 
     const [msg, setmsg] = useState<string>("");
 
@@ -103,7 +100,7 @@ export function WebmailHelper(props: {
                 </button>
             </div>
 
-            <div className="output">
+            <div className="output mt-2 px-2 text-md text-white">
                 {msg}
             </div>
         </div>
