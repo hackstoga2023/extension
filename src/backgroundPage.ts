@@ -11,7 +11,6 @@ browser.runtime.onMessage.addListener(
         const apikey = "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"
         switch (message.mode) {
             case "email":
-                console.log("Making req")
                 const response = await fetch("https://api.openai.com/v1/chat/completions", {
                     headers: {
                         "Authorization": "Bearer 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",
@@ -21,7 +20,7 @@ browser.runtime.onMessage.addListener(
                     method: "POST",
                     body: JSON.stringify({
                         "model": "gpt-3.5-turbo",
-                        "messages": [{ "role": "user", "content": "Hello!" }]
+                        "messages": [{ "role": "user", "content": `The below is a an email I have recieved please come up with a contextual response to it. ${message.input}` }]
                     })
                 })
 

@@ -18,42 +18,51 @@ function scrollWindow(position: number) {
     window.scroll(0, position);
 }
 
-function readEmail() {
-    console.log("reading email")
-    const selector = ".adn.ads";
-    let email = document.querySelector(".adn.ads");
-    console.log(email);
+async function readEmail() {
 
-    let lines = email?.childNodes;
-    // let lines = email?.querySelectorAll("div");
+    const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+    const currentTab = tabs[0];
+    const currentTabId = currentTab.id as number;
 
+    const data = await browser.scripting.executeScript({
+        target: {
+            tabId: currentTabId
+        },
+        func: () => {
+            let email = document.querySelector("#\\:2vq > div.adn.ads");
+            let lines = email?.childNodes;
+            // let lines = email?.querySelectorAll("div");
 
-    let emailString = "";
+            console.log(email)
+            let emailString = "";
 
-    emailString += document.querySelector("#\\:24 > div.adn.ads > div.gs > div.gE.iv.gt > table > tbody > tr:nth-child(1) > td.gF.gK > table > tbody > tr > td > h3 > span > span > span")?.textContent;
-    lines?.forEach((element) => {
-        if (element.textContent) {
-            let bodyText = (element as HTMLElement).querySelector("#\\:26 > div:nth-child(1)");
-            if (bodyText) {
-                bodyText?.childNodes.forEach((bodyElement) => {
-                    if (bodyElement) {
+            emailString += document.querySelector("#\\:24 > div.adn.ads > div.gs > div.gE.iv.gt > table > tbody > tr:nth-child(1) > td.gF.gK > table > tbody > tr > td > h3 > span > span > span")?.textContent;
+            lines?.forEach((element) => {
+                if (element.textContent) {
+                    let bodyText = (element as HTMLElement).querySelector("#\\:26 > div:nth-child(1)");
+                    if (bodyText) {
+                        bodyText?.childNodes.forEach((bodyElement) => {
+                            if (bodyElement) {
 
-                        emailString += bodyElement.textContent + " ";
+                                emailString += bodyElement.textContent + " ";
 
+                            } else {
+                                emailString += element.textContent;
+                            }
+                        })
                     } else {
-                        emailString += element.textContent;
+                        emailString += element.textContent + " ";
                     }
-                })
-            } else {
-                emailString += element.textContent + " ";
-            }
-        } else {
-            console.log("no content");
-            emailString += " ";
+                } else {
+                    console.log("no content");
+                    emailString += " ";
+                }
+            })
+            console.log(emailString)
+            return emailString;
         }
     })
-    console.log(emailString)
-    return emailString;
+    return data[0].result;
 }
 
 
@@ -64,10 +73,13 @@ export function Popup() {
 
     const [msg, setmsg] = useState<string>("TestMsg");
 
-    const doReadEmail = () => {
-        const data = readEmail();
-        console.log("trying to read email");
-        setmsg(data)
+    const doReadEmail = async () => {
+        const data = await readEmail();
+        const airesp = await browser.runtime.sendMessage({
+            mode: "email",
+            input: data
+        })
+        setmsg(airesp);
     }
     return (
         <div className={css.popupContainer}>
