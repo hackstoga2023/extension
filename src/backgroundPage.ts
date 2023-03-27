@@ -9,13 +9,13 @@ interface Message {
 browser.runtime.onMessage.addListener(
     async (message: Message, sender) => {
         let resp;
-        const apikey = "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"
+        const apikey = "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"
         switch (message.mode) {
             case "email":
                 const response = await fetch("https://api.openai.com/v1/chat/completions", {
                     headers: {
-                        "Authorization": "Bearer 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",
-                        "OpenAI-Organization": "org-nPujVuZtkzTfCsljKAsPXe8a",
+                        "Authorization": "Bearer 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",
+                        "OpenAI-Organization": "org-TA6t5XiBxVePWznk6AYXMarE",
                         "Content-Type": "application/json"
                     },
                     method: "POST",
@@ -31,8 +31,8 @@ browser.runtime.onMessage.addListener(
             case "news":
                 const newsresponse = await fetch("https://api.openai.com/v1/chat/completions", {
                     headers: {
-                        "Authorization": "Bearer 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",
-                        "OpenAI-Organization": "org-nPujVuZtkzTfCsljKAsPXe8a",
+                        "Authorization": "Bearer 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",
+                        "OpenAI-Organization": "org-TA6t5XiBxVePWznk6AYXMarE",
                         "Content-Type": "application/json"
                     },
                     method: "POST",

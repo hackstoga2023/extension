@@ -77,7 +77,7 @@ export function WebmailHelper() {
                 tabId: currentTabId
             },
             func: (msg) => {
-                (document.querySelector("#\\:21") as HTMLButtonElement).click();
+                (document.querySelector(".bkH") as HTMLButtonElement).click();
 
                 setTimeout(() => { (document.querySelector(".editable") as HTMLDivElement).innerHTML = msg; }, 1000);
             },
@@ -122,7 +122,7 @@ export function WebmailHelper() {
                     Funny
                 </button>
             </div>
-            <button onClick={confirmReply}>Test</button>
+            <button onClick={confirmReply}>Type Email</button>
             <div className="output mt-2 px-10 text-md text-white">
                 {msg}
             </div>
