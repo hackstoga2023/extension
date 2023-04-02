@@ -8,7 +8,7 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/aeksco/react-typescript-web-extension-starter.svg?style=flat)]()
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
-:desktop_computer: An AI Poewered Web Extension built with React, TypeScript, Storybook, EsLint, Prettier, Jest, TailwindCSS, &amp; Webpack. Compatible with Google Chrome, Mozilla Firefox, Brave, and Microsoft Edge.
+:desktop_computer: An AI Powered Web Extension built with React, TypeScript, Storybook, EsLint, Prettier, Jest, TailwindCSS, &amp; Webpack. Compatible with Google Chrome, Mozilla Firefox, Brave, and Microsoft Edge.
 
 ## Inspiration
 The rise and usefullness of llms specifically chatgpt and the emergence of helpful  ai-driven browser automation. 
