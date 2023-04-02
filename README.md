@@ -8,12 +8,6 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/aeksco/react-typescript-web-extension-starter.svg?style=flat)]()
 [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
-[![HitCount](http://hits.dwyl.com/aeksco/react-typescript-web-extension-starter.svg)](http://hits.dwyl.com/aeksco/react-typescript-web-extension-starter)
-[![Tweet](https://img.shields.io/twitter/url/https/github.com/aeksco/react-typescript-web-extension-starter.svg?style=social)](https://twitter.com/intent/tweet?text=https://github.com/aeksco/react-typescript-web-extension-starter)
-[![Twitter Follow](https://img.shields.io/twitter/follow/aeksco.svg?style=social)](https://twitter.com/aeksco)
-
-![ChromeBuddy](https://i.imgur.com/wjIiRSv.png)
-
 :desktop_computer: An AI Poewered Web Extension built with React, TypeScript, Storybook, EsLint, Prettier, Jest, TailwindCSS, &amp; Webpack. Compatible with Google Chrome, Mozilla Firefox, Brave, and Microsoft Edge.
 
 ## Inspiration
@@ -21,7 +15,15 @@ The rise and usefullness of llms specifically chatgpt and the emergence of helpf
 ## What it does
 Summarazes news articles and generates contentxtual responses to email chains, 
 ## What's next for ChromeBuddy
-Browser automation, being able to tell it to do things and the browser knowing how to click the right elements to perform your desired task
+Browser automation; being able to instruct the extension and the browser learning how to click the right elements to perform your desired task
+
+[![HitCount](http://hits.dwyl.com/aeksco/react-typescript-web-extension-starter.svg)](http://hits.dwyl.com/aeksco/react-typescript-web-extension-starter)
+[![Tweet](https://img.shields.io/twitter/url/https/github.com/aeksco/react-typescript-web-extension-starter.svg?style=social)](https://twitter.com/intent/tweet?text=https://github.com/aeksco/react-typescript-web-extension-starter)
+[![Twitter Follow](https://img.shields.io/twitter/follow/aeksco.svg?style=social)](https://twitter.com/aeksco)
+
+![ChromeBuddy](https://i.imgur.com/wjIiRSv.png)
+
+
 
 ![Example Extension Popup](https://i.imgur.com/UvOOWlv.png "Example Extension Popup")
 
