@@ -13,7 +13,7 @@
 ## Inspiration
 The rise and usefullness of llms specifically chatgpt and the emergence of helpful  ai-driven browser automation. 
 ## What it does
-Summarazes news articles and generates contentxtual responses to email chains, 
+Summarazes news articles and generates contentxtual responses to email chains.
 ## What's next for ChromeBuddy
 Browser automation; being able to instruct the extension and the browser learning how to click the right elements to perform your desired task
 
